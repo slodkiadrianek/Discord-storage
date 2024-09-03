@@ -39,3 +39,10 @@ export async function concatTXT(filePaths, outdir, filename) {
         writeStream.end();
     });
 }
+export function sortFiles(files) {
+    return files.sort((a, b) => {
+        const numA = parseInt(a.match(/\d+/)[0]);
+        const numB = parseInt(b.match(/\d+/)[0]);
+        return numA - numB;
+    });
+}

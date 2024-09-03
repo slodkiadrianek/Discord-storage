@@ -49,7 +49,7 @@ export async function createThreadInChannel(messageName, filePaths) {
 }
 export async function fetchData(threadId) {
     const thread = await client.channels.fetch(threadId);
-    if (!thread || thread.type !== ChannelType.PublicThread) {
+    if (!thread || !thread.isThread()) {
         throw new Error("Wątek nie został znaleziony lub nie jest wątkiem publicznym.");
     }
     const fetchedMessages = await thread.messages.fetch({
@@ -67,5 +67,5 @@ export async function fetchData(threadId) {
     for (const link of links) {
         await download(link, ext);
     }
-    return links;
+    return "Files downloaded successfully";
 }
