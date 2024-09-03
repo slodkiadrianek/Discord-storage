@@ -49,3 +49,11 @@ export async function concatTXT(
     writeStream.end();
   });
 }
+
+export function sortFiles(files: string[]): string[] {
+  return files.sort((a, b) => {
+    const numA: number = parseInt(a.match(/\d+/)![0]);
+    const numB: number = parseInt(b.match(/\d+/)![0]);
+    return numA - numB;
+  });
+}
