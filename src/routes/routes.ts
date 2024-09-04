@@ -1,4 +1,4 @@
-import e from "express";
+import e, { Request, Response } from "express";
 import { concatFiles } from "../controller/concat.js";
 import { splitPDF, splitTXT } from "../controller/split.js";
 import multer from "multer";
@@ -18,5 +18,17 @@ const router = e.Router();
 router.post("/auth/pdf", upload.single("pdf"), splitPDF);
 router.post("/auth/txt", upload.single("txt"), splitTXT);
 router.post("/auth/concat", concatFiles);
+router.get("/", (req: Request, res: Response) => {
+  res.render("index");
+});
+router.get("/pdf", (req: Request, res: Response) => {
+  res.render("splitPDF");
+});
+router.get("/txt", (req: Request, res: Response) => {
+  res.render("splitTXT");
+});
+router.get("/concat", (req: Request, res: Response) => {
+  res.render("concat");
+});
 
 export default router;

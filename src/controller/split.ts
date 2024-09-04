@@ -15,10 +15,13 @@ interface MulterRequest extends Request {
  * @param res - The Express response object.
  * @returns A response indicating the success of the operation.
  */
-export const splitPDF = async (req: MulterRequest, res: Response) => {
+export const splitPDF = async (
+  req: Request,
+  res: Response
+): Promise<Response<any>> => {
   const file = req.file;
-  const filename = file.filename;
-  const name = filename.split(".")[0];
+  const filename = file?.filename;
+  const name: any = filename?.split(".")[0];
   const __dirname = path.resolve();
   const ext = path.join(__dirname, `src/uploads/${filename}`);
 
@@ -49,13 +52,12 @@ export const splitPDF = async (req: MulterRequest, res: Response) => {
  * @param res - The Express response object.
  * @returns A response indicating the success of the operation.
  */
-export const splitTXT = async (req: MulterRequest, res: Response) => {
+export const splitTXT = async (req: Request, res: Response) => {
   const file: any = req.file;
   const filename = file.filename;
   const name = filename.split(".")[0];
 
   // Split the TXT file
-  // Add more comments here if needed
 
   const __dirname = path.resolve();
   const ext = path.join(__dirname, `src/uploads/${filename}`);
@@ -69,5 +71,5 @@ export const splitTXT = async (req: MulterRequest, res: Response) => {
   for (const file of uploadedFiles) {
     fs.unlinkSync(`./src/uploads/${file}`);
   }
-  return res.send("TXT file uploaded and split successfully");
+  return res.redirect("/");
 };

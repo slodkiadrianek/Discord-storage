@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Concat files</title>
+    <style>
+      body {
+        font-family: "Arial";
+        height: 90vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1.5vmax;
+      }
+    </style>
+  </head>
+  <body>
+    <form action="/auth/concat" enctype="multipart/form-data" method="post">
+      <input type="text" name="threadId" required placeholder="ThreadId" />
+      <select name="type" id="">
+        <option value="pdf">PDF</option>
+        <option value="txt">TXT</option>
+      </select>
+      <button type="submit">Send</button>
+    </form>
+  </body>
+</html>

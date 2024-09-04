@@ -55,5 +55,5 @@ export const concatFiles = async (req: Request, res: Response) => {
   for (const file of outputedFiles) {
     fs.unlinkSync(`./output/${file}`);
   }
-  return res.send("Files concatenated and downloaded successfully");
+  return res.redirect("/concat");
 };
