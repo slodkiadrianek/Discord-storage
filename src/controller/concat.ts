@@ -7,7 +7,7 @@ import { Request, Response } from "express";
 import path from "path";
 import fs from "fs";
 import { fetchData } from "../model/discord.js";
-import { concatTXT, sortFiles } from "../model/concat.js";
+import { concatPDF, concatTXT, sortFiles } from "../model/concat.js";
 
 export const concatFiles = async (req: Request, res: Response) => {
   const { threadId, type } = req.body;
@@ -29,31 +29,16 @@ export const concatFiles = async (req: Request, res: Response) => {
 
   // Get the current directory path
   const __dirname = path.resolve();
-
+  let fileToDownload: string = "";
   // Concatenate the files and save the concatenated file
   if (type === "txt") {
     await concatTXT(filePaths, "./output", name);
-    const ext = path.join(__dirname, `./output/${name}.txt`);
-    res.download(ext);
+    fileToDownload = path.join(__dirname, `./output/${name}.txt`);
   }
   if (type === "pdf") {
-    await concatTXT(filePaths, "./output", name);
-    const ext = path.join(__dirname, `./output/${name}.pdf`);
-    res.download(ext);
+    await concatPDF(filePaths, "./output", name);
+    fileToDownload = path.join(__dirname, `./output/${name}.pdf`);
   }
 
-  // Delete the uploaded files from the "src/uploads" directory
-  const uploadedFiles = fs.readdirSync("src/uploads");
-  for (const file of uploadedFiles) {
-    fs.unlinkSync(`./src/uploads/${file}`);
-  }
-
-  // Get the list of files in the "../output" directory
-  const outputedFiles = fs.readdirSync("../output");
-
-  // The code is incomplete and does not handle the outputedFiles array
-  for (const file of outputedFiles) {
-    fs.unlinkSync(`./output/${file}`);
-  }
-  return res.redirect("/concat");
+  return res.download(fileToDownload);
 };
