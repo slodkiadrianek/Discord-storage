@@ -57,8 +57,6 @@ export const splitTXT = async (req: MulterRequest, res: Response) => {
   // Split the TXT file
   // Add more comments here if needed
 
-  return res.send("TXT file uploaded and split successfully");
-};
   const __dirname = path.resolve();
   const ext = path.join(__dirname, `src/uploads/${filename}`);
   const result = await splitTxt(ext, "./output");
